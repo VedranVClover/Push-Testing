@@ -12,6 +12,8 @@
 		0B1B410A2276D02C0068E3EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B1B41082276D02C0068E3EF /* Main.storyboard */; };
 		0B1B410C2276D02D0068E3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B1B410B2276D02D0068E3EF /* Assets.xcassets */; };
 		0B1B410F2276D02D0068E3EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B1B410D2276D02D0068E3EF /* LaunchScreen.storyboard */; };
+		0B4A5C63227C6E37008D3505 /* CSPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5C62227C6E37008D3505 /* CSPushManager.swift */; };
+		3161ACFCCA4673F408B5D0DC /* Pods_Push_Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E267F9046EBFFAFD096F159 /* Pods_Push_Testing.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,10 @@
 		0B1B410E2276D02D0068E3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B1B41102276D02D0068E3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B1B41162276E2490068E3EF /* Push Testing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Push Testing.entitlements"; sourceTree = "<group>"; };
+		0B4A5C62227C6E37008D3505 /* CSPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSPushManager.swift; sourceTree = "<group>"; };
+		4C8FA095999C517DB485EB2E /* Pods-Push Testing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Push Testing.debug.xcconfig"; path = "Target Support Files/Pods-Push Testing/Pods-Push Testing.debug.xcconfig"; sourceTree = "<group>"; };
+		4F06B73B929DB5BC82E14319 /* Pods-Push Testing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Push Testing.release.xcconfig"; path = "Target Support Files/Pods-Push Testing/Pods-Push Testing.release.xcconfig"; sourceTree = "<group>"; };
+		8E267F9046EBFFAFD096F159 /* Pods_Push_Testing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Push_Testing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3161ACFCCA4673F408B5D0DC /* Pods_Push_Testing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +47,10 @@
 			isa = PBXGroup;
 			children = (
 				0B1B41032276D02B0068E3EF /* Push Testing */,
+				0B4A5C61227C6E21008D3505 /* CSPushManager */,
 				0B1B41022276D02B0068E3EF /* Products */,
+				627F28C86A1222E7164A2947 /* Pods */,
+				10ADEEDCD0E8A3CE3DCA71DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +76,31 @@
 			path = "Push Testing";
 			sourceTree = "<group>";
 		};
+		0B4A5C61227C6E21008D3505 /* CSPushManager */ = {
+			isa = PBXGroup;
+			children = (
+				0B4A5C62227C6E37008D3505 /* CSPushManager.swift */,
+			);
+			path = CSPushManager;
+			sourceTree = "<group>";
+		};
+		10ADEEDCD0E8A3CE3DCA71DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E267F9046EBFFAFD096F159 /* Pods_Push_Testing.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		627F28C86A1222E7164A2947 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4C8FA095999C517DB485EB2E /* Pods-Push Testing.debug.xcconfig */,
+				4F06B73B929DB5BC82E14319 /* Pods-Push Testing.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -73,9 +108,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B1B41132276D02D0068E3EF /* Build configuration list for PBXNativeTarget "Push Testing" */;
 			buildPhases = (
+				E651BBD05F7902D103DE229A /* [CP] Check Pods Manifest.lock */,
 				0B1B40FD2276D02B0068E3EF /* Sources */,
 				0B1B40FE2276D02B0068E3EF /* Frameworks */,
 				0B1B40FF2276D02B0068E3EF /* Resources */,
+				0715B2A69C00E863A3F4926A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -98,6 +135,7 @@
 				TargetAttributes = {
 					0B1B41002276D02B0068E3EF = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -137,12 +175,68 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0715B2A69C00E863A3F4926A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Push Testing/Pods-Push Testing-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxReachability/RxReachability.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxReachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Push Testing/Pods-Push Testing-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E651BBD05F7902D103DE229A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Push Testing-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0B1B40FD2276D02B0068E3EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				0B1B41072276D02C0068E3EF /* ViewController.swift in Sources */,
+				0B4A5C63227C6E37008D3505 /* CSPushManager.swift in Sources */,
 				0B1B41052276D02C0068E3EF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +381,7 @@
 		};
 		0B1B41142276D02D0068E3EF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C8FA095999C517DB485EB2E /* Pods-Push Testing.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Push Testing/Push Testing.entitlements";
@@ -300,13 +395,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clover-studio.cspush";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		0B1B41152276D02D0068E3EF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F06B73B929DB5BC82E14319 /* Pods-Push Testing.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Push Testing/Push Testing.entitlements";
@@ -320,7 +416,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clover-studio.cspush";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
