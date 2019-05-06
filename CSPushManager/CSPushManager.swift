@@ -21,6 +21,8 @@ class CSPushManager: NSObject {
     
     let bag = DisposeBag()
     
+    // MARK: - Initialization Methods
+    
     public func start(withApplication application: UIApplication) {
         print("Starting")
         UNUserNotificationCenter.current().delegate = self
@@ -55,6 +57,9 @@ class CSPushManager: NSObject {
         })
     }()
     
+    
+    // MARK: - Category Builders
+    
     var textMessageCategory: UNNotificationCategory {
         return UNNotificationCategory(identifier: kTxtMessageCategory,
                                       actions: [replyAction, openInAppAction, dismissAction],
@@ -75,6 +80,9 @@ class CSPushManager: NSObject {
                                       intentIdentifiers: [],
                                       options: [])
     }
+    
+    
+    // MARK: - Action Builders
     
     var replyAction: UNNotificationAction {
         return UNTextInputNotificationAction(identifier: "REPLY", title: "Quick Reply", options: [])
