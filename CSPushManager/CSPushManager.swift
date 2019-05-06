@@ -11,17 +11,18 @@ import RxSwift
 import RxCocoa
 import UserNotifications
 
+typealias SendTokenToApiCompletion = (Error) -> Void
+
 class CSPushManager: NSObject {
     
-    let kTxtMessageCategory = "txt_message_category"
-    let kShareImage = "txt_share_image"
-    let kShareUrl = "txt_share_url"
+    // MARK: - VARIABLES
     
     public static let instance = CSPushManager()
     
     let bag = DisposeBag()
     
-    // MARK: - Initialization Methods
+    
+    // MARK: - INITIALIZATION
     
     public func start(withApplication application: UIApplication) {
         print("Starting")
@@ -30,9 +31,11 @@ class CSPushManager: NSObject {
         authorizationTrigger
             .filter{ $0 }
             .observeOn(MainScheduler.instance)
-            .subscribe(onSuccess: { _ in
+            .subscribe(onSuccess: { [unowned self] _ in
                 application.registerForRemoteNotifications()
-                
+                UNUserNotificationCenter.current().setNotificationCategories([self.textMessageCategory,
+                                                                              self.imageShareCategory,
+                                                                              self.urlShareCategory])
             })
         .disposed(by: bag)
     }
@@ -58,52 +61,71 @@ class CSPushManager: NSObject {
     }()
     
     
-    // MARK: - Category Builders
+    // MARK: - CATEGORIES
     
     var textMessageCategory: UNNotificationCategory {
-        return UNNotificationCategory(identifier: kTxtMessageCategory,
-                                      actions: [replyAction, openInAppAction, dismissAction],
+        return UNNotificationCategory(identifier: CSPushConstants.txtMessageCategory,
+                                      actions: [replyAction, viewInAppAction, dismissAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
     
     var imageShareCategory: UNNotificationCategory {
-        return UNNotificationCategory(identifier: kShareImage,
-                                      actions: [replyAction, openInAppAction],
+        return UNNotificationCategory(identifier: CSPushConstants.shareImage,
+                                      actions: [replyAction, viewInAppAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
     
     var urlShareCategory: UNNotificationCategory {
-        return UNNotificationCategory(identifier: kShareUrl,
-                                      actions: [replyAction, openUrlAction, openInAppAction],
+        return UNNotificationCategory(identifier: CSPushConstants.shareUrl,
+                                      actions: [replyAction, openUrlAction, viewInAppAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
     
     
-    // MARK: - Action Builders
+    // MARK: - ACTIONS
     
     var replyAction: UNNotificationAction {
-        return UNTextInputNotificationAction(identifier: "REPLY", title: "Quick Reply", options: [])
+        return UNTextInputNotificationAction(identifier: CSPushConstants.replyAction, title: "Reply", options: [])
     }
     
-    var openInAppAction: UNNotificationAction {
-        return UNNotificationAction(identifier: "VIEW", title: "View", options: [.foreground])
+    var viewInAppAction: UNNotificationAction {
+        return UNNotificationAction(identifier: CSPushConstants.viewAction, title: "View", options: [.foreground])
     }
     
     var dismissAction: UNNotificationAction {
-        return UNNotificationAction(identifier: "DISMISS", title: "Dismiss", options: [.destructive])
+        return UNNotificationAction(identifier: CSPushConstants.dismissAction, title: "Dismiss", options: [.destructive])
     }
     
     var openUrlAction: UNNotificationAction {
-        return UNNotificationAction(identifier: "OPEN_URL", title: "Open Url", options: [.destructive])
+        return UNNotificationAction(identifier: CSPushConstants.openUrlAction, title: "Open Url", options: [.destructive])
     }
     
 }
 
+// MARK: - HELPER METHODS
+extension CSPushManager {
+    func sendAuthTokenToApi(tokenString: String, completion: SendTokenToApiCompletion) {
+        
+    }
+}
+
+// MARK: - DELEGATE METHODS
 extension CSPushManager: UNUserNotificationCenterDelegate {
     
 }
+
+
+
+
+/*
+ 
+ 
+ 
+ 
+ 
+ */
 
 

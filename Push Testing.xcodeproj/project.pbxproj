@@ -13,6 +13,9 @@
 		0B1B410C2276D02D0068E3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B1B410B2276D02D0068E3EF /* Assets.xcassets */; };
 		0B1B410F2276D02D0068E3EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B1B410D2276D02D0068E3EF /* LaunchScreen.storyboard */; };
 		0B4A5C63227C6E37008D3505 /* CSPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5C62227C6E37008D3505 /* CSPushManager.swift */; };
+		0B78626F228057BF006E92F2 /* CSPushConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B78626E228057BF006E92F2 /* CSPushConstants.swift */; };
+		0B786271228058B1006E92F2 /* PushConstants.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B786270228058B1006E92F2 /* PushConstants.plist */; };
+		0B8352232280557600110DDD /* libCSConstants.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8352222280557600110DDD /* libCSConstants.a */; };
 		3161ACFCCA4673F408B5D0DC /* Pods_Push_Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E267F9046EBFFAFD096F159 /* Pods_Push_Testing.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +29,9 @@
 		0B1B41102276D02D0068E3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B1B41162276E2490068E3EF /* Push Testing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Push Testing.entitlements"; sourceTree = "<group>"; };
 		0B4A5C62227C6E37008D3505 /* CSPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSPushManager.swift; sourceTree = "<group>"; };
+		0B78626E228057BF006E92F2 /* CSPushConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSPushConstants.swift; sourceTree = "<group>"; };
+		0B786270228058B1006E92F2 /* PushConstants.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PushConstants.plist; sourceTree = "<group>"; };
+		0B8352222280557600110DDD /* libCSConstants.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCSConstants.a; sourceTree = "<group>"; };
 		4C8FA095999C517DB485EB2E /* Pods-Push Testing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Push Testing.debug.xcconfig"; path = "Target Support Files/Pods-Push Testing/Pods-Push Testing.debug.xcconfig"; sourceTree = "<group>"; };
 		4F06B73B929DB5BC82E14319 /* Pods-Push Testing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Push Testing.release.xcconfig"; path = "Target Support Files/Pods-Push Testing/Pods-Push Testing.release.xcconfig"; sourceTree = "<group>"; };
 		8E267F9046EBFFAFD096F159 /* Pods_Push_Testing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Push_Testing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3161ACFCCA4673F408B5D0DC /* Pods_Push_Testing.framework in Frameworks */,
+				0B8352232280557600110DDD /* libCSConstants.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,7 @@
 		0B1B41032276D02B0068E3EF /* Push Testing */ = {
 			isa = PBXGroup;
 			children = (
+				0B8352222280557600110DDD /* libCSConstants.a */,
 				0B1B41162276E2490068E3EF /* Push Testing.entitlements */,
 				0B1B41042276D02B0068E3EF /* AppDelegate.swift */,
 				0B1B41062276D02C0068E3EF /* ViewController.swift */,
@@ -72,6 +80,7 @@
 				0B1B410B2276D02D0068E3EF /* Assets.xcassets */,
 				0B1B410D2276D02D0068E3EF /* LaunchScreen.storyboard */,
 				0B1B41102276D02D0068E3EF /* Info.plist */,
+				0B786270228058B1006E92F2 /* PushConstants.plist */,
 			);
 			path = "Push Testing";
 			sourceTree = "<group>";
@@ -80,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				0B4A5C62227C6E37008D3505 /* CSPushManager.swift */,
+				0B78626E228057BF006E92F2 /* CSPushConstants.swift */,
 			);
 			path = CSPushManager;
 			sourceTree = "<group>";
@@ -169,6 +179,7 @@
 			files = (
 				0B1B410F2276D02D0068E3EF /* LaunchScreen.storyboard in Resources */,
 				0B1B410C2276D02D0068E3EF /* Assets.xcassets in Resources */,
+				0B786271228058B1006E92F2 /* PushConstants.plist in Resources */,
 				0B1B410A2276D02C0068E3EF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,6 +249,7 @@
 				0B1B41072276D02C0068E3EF /* ViewController.swift in Sources */,
 				0B4A5C63227C6E37008D3505 /* CSPushManager.swift in Sources */,
 				0B1B41052276D02C0068E3EF /* AppDelegate.swift in Sources */,
+				0B78626F228057BF006E92F2 /* CSPushConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +405,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Push\\ Testing",
+					"$(PROJECT_DIR)/Push\\ Testing",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clover-studio.cspush";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -413,6 +430,11 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Push\\ Testing",
+					"$(PROJECT_DIR)/Push\\ Testing",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clover-studio.cspush";
 				PRODUCT_NAME = "$(TARGET_NAME)";
