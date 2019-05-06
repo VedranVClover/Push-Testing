@@ -119,13 +119,21 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
 
 
 
-
 /*
+ SHARE IMAGE
  
- 
- 
- 
- 
+ {
+ "aps": {
+ "alert": "Hello!",
+ "sound": "default",
+ "mutable-content": 1,
+ "category" : "txt_share_image",
+ "badge": 1
+ },
+ "data": {
+ "attachment-url": "https://raw.githubusercontent.com/pluralsight/guides/master/images/df051757-9a09-417b-a77a-8192c984b9a4.png"
+ }
+ }
  */
 
 

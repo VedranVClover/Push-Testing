@@ -17,3 +17,8 @@ target 'Push Testing' do
   use_frameworks!
   
 end
+
+target 'CSNotificationService' do
+  frameworks
+  use_frameworks!
+end
