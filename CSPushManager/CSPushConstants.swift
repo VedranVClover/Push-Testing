@@ -10,9 +10,10 @@ import Foundation
 
 class CSPushConstants {
     
-    static let txtMessageCategory = "txt_message_category"
-    static let shareImage = "txt_share_image"
-    static let shareUrl = "txt_share_url"
+    static let txtMessageCategory = "txt_message"
+    static let shareImage = "share_image"
+    static let shareUrl = "share_url"
+    static let shareVideo = "share_video"
     
     static let replyAction = "REPLY"
     static let viewAction = "VIEW"

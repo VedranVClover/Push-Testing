@@ -35,6 +35,7 @@ class CSPushManager: NSObject {
                 application.registerForRemoteNotifications()
                 UNUserNotificationCenter.current().setNotificationCategories([self.textMessageCategory,
                                                                               self.imageShareCategory,
+                                                                              self.videoShareCategory,
                                                                               self.urlShareCategory])
             })
         .disposed(by: bag)
@@ -65,6 +66,13 @@ class CSPushManager: NSObject {
     
     var textMessageCategory: UNNotificationCategory {
         return UNNotificationCategory(identifier: CSPushConstants.txtMessageCategory,
+                                      actions: [replyAction, viewInAppAction, dismissAction],
+                                      intentIdentifiers: [],
+                                      options: [])
+    }
+    
+    var videoShareCategory: UNNotificationCategory {
+        return UNNotificationCategory(identifier: CSPushConstants.shareVideo,
                                       actions: [replyAction, viewInAppAction, dismissAction],
                                       intentIdentifiers: [],
                                       options: [])
@@ -127,13 +135,28 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  "alert": "Hello!",
  "sound": "default",
  "mutable-content": 1,
- "category" : "txt_share_image",
+ "category" : "share_image",
  "badge": 1
  },
- "data": {
- "attachment-url": "https://raw.githubusercontent.com/pluralsight/guides/master/images/df051757-9a09-417b-a77a-8192c984b9a4.png"
+ "attachment-url": "https://media2.giphy.com/avatars/100soft/WahNEDdlGjRZ.gif"
  }
+ 
+ 
+ SHARE VIDEO
+ 
+ 
+ 
+ {
+ "aps": {
+ "alert": "Hello!",
+ "sound": "default",
+ "mutable-content": 1,
+ "category" : "share_video",
+ "badge": 1
+ },
+ "attachment-url": "https://youtu.be/x3bfa3DZ8JM"
  }
+ 
  */
 
 

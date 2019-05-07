@@ -20,13 +20,28 @@ class NotificationService: UNNotificationServiceExtension {
         
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content here...
-//            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
             
+            //Share Image
             if bestAttemptContent.categoryIdentifier == CSPushConstants.shareImage,
                 let content = request.content.mutableCopy() as? UNMutableNotificationContent,
                 let attachmentUrlString = content.userInfo["attachment-url"] as? String,
                 let attachmentUrl = URL(string: attachmentUrlString) {
-                downloadWithURL(downloadUrl: attachmentUrl, filename: "image.png") { attachment in
+                let extensionName = attachmentUrl.pathExtension
+                downloadWithURL(downloadUrl: attachmentUrl, filename: "image.\(extensionName)") { attachment in
+                    if let attachment = attachment {
+                        bestAttemptContent.attachments = [attachment]
+                    }
+                    contentHandler(bestAttemptContent)
+                }
+            } else if bestAttemptContent.categoryIdentifier == CSPushConstants.shareVideo,
+                let content = request.content.mutableCopy() as? UNMutableNotificationContent,
+                let attachmentUrlString = content.userInfo["attachment-url"] as? String,
+                let attachmentUrl = URL(string: attachmentUrlString) {
+                let videoIdentifier = attachmentUrl.lastPathComponent
+                guard let thumbnailUrl = URL(string: "https://img.youtube.com/vi/\(videoIdentifier)/0.jpg") else {
+                    return contentHandler(bestAttemptContent)
+                }
+                downloadWithURL(downloadUrl: thumbnailUrl, filename: "image.jpg") { attachment in
                     if let attachment = attachment {
                         bestAttemptContent.attachments = [attachment]
                     }
@@ -45,7 +60,7 @@ class NotificationService: UNNotificationServiceExtension {
             contentHandler(bestAttemptContent)
         }
     }
-    
+
     private func downloadWithURL(downloadUrl: URL, filename: String, completion: @escaping (UNNotificationAttachment?) -> Void) {
         let task = URLSession.shared.downloadTask(with: downloadUrl) { [weak self] (url, response, error) in
             guard error == nil,
