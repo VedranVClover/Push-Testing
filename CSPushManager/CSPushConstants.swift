@@ -10,15 +10,35 @@ import Foundation
 
 class CSPushConstants {
     
-    static let txtMessageCategory = "txt_message"
-    static let shareImage = "share_image"
-    static let shareUrl = "share_url"
-    static let shareVideo = "share_video"
+    enum PushCategory: String {
+        case txtMessageCategory = "txt_message"
+        case shareImage = "share_image"
+        case shareUrl = "share_url"
+        case shareVideo = "share_video"
+        
+        func pushDescription(userName: String?) -> String {
+            var descr = "\(userName ?? "Contact") "
+            switch self {
+            case .shareImage:
+                descr += "shared an Image"
+            case .shareUrl:
+                descr += "shared a Link"
+            case .shareVideo:
+                descr += "shared a Video"
+            case .txtMessageCategory:
+                descr += "wrote:"
+            }
+            return descr
+        }
+    }
+    
     
     static let replyAction = "REPLY"
     static let viewAction = "VIEW"
     static let dismissAction = "DISMISS"
     static let openUrlAction = "OPEN_URL"
+    
+    static let contactName = "contact_name"
     
 }
 

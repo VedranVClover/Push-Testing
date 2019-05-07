@@ -22,18 +22,65 @@ class NotificationService: UNNotificationServiceExtension {
             // Modify the notification content here...
             
             //Share Image
-            if bestAttemptContent.categoryIdentifier == CSPushConstants.shareImage,
-                let content = request.content.mutableCopy() as? UNMutableNotificationContent,
-                let attachmentUrlString = content.userInfo["attachment-url"] as? String,
-                let attachmentUrl = URL(string: attachmentUrlString) {
+            switch bestAttemptContent.categoryIdentifier {
+                
+            case CSPushConstants.PushCategory.shareImage.rawValue :
+                guard let content = request.content.mutableCopy() as? UNMutableNotificationContent,
+                    let attachmentUrlString = content.userInfo["attachment-url"] as? String,
+                    let attachmentUrl = URL(string: attachmentUrlString) else {
+                        contentHandler(bestAttemptContent)
+                        break
+                }
                 let extensionName = attachmentUrl.pathExtension
                 downloadWithURL(downloadUrl: attachmentUrl, filename: "image.\(extensionName)") { attachment in
                     if let attachment = attachment {
                         bestAttemptContent.attachments = [attachment]
                     }
+                    bestAttemptContent.title = CSPushConstants
+                        .PushCategory
+                        .shareImage
+                        .pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)
                     contentHandler(bestAttemptContent)
                 }
-            } else if bestAttemptContent.categoryIdentifier == CSPushConstants.shareVideo,
+                
+            case CSPushConstants.PushCategory.shareVideo.rawValue :
+                guard let content = request.content.mutableCopy() as? UNMutableNotificationContent,
+                    let attachmentUrlString = content.userInfo["attachment-url"] as? String,
+                    let attachmentUrl = URL(string: attachmentUrlString) else {
+                        contentHandler(bestAttemptContent)
+                        break
+                }
+                let videoIdentifier = attachmentUrl.lastPathComponent
+                guard let thumbnailUrl = URL(string: "https://img.youtube.com/vi/\(videoIdentifier)/0.jpg") else {
+                    return contentHandler(bestAttemptContent)
+                }
+                downloadWithURL(downloadUrl: thumbnailUrl, filename: "image.jpg") { attachment in
+                    if let attachment = attachment {
+                        bestAttemptContent.attachments = [attachment]
+                    }
+                    bestAttemptContent.title = CSPushConstants
+                        .PushCategory
+                        .shareVideo
+                        .pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)
+                    contentHandler(bestAttemptContent)
+                }
+                
+            case CSPushConstants.PushCategory.txtMessageCategory.rawValue :
+                guard let content = request.content.mutableCopy() as? UNMutableNotificationContent else {
+                    contentHandler(bestAttemptContent)
+                    break
+                }
+                bestAttemptContent.title = "\(CSPushConstants.PushCategory.txtMessageCategory.pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)) \(bestAttemptContent.title)"
+                contentHandler(bestAttemptContent)
+            default :
+                contentHandler(bestAttemptContent)
+            }
+            
+            /*
+            if bestAttemptContent.categoryIdentifier == CSPushConstants.PushCategory.shareImage.rawValue,
+                 {
+                
+            } else if bestAttemptContent.categoryIdentifier == CSPushConstants.PushCategory.shareVideo.rawValue,
                 let content = request.content.mutableCopy() as? UNMutableNotificationContent,
                 let attachmentUrlString = content.userInfo["attachment-url"] as? String,
                 let attachmentUrl = URL(string: attachmentUrlString) {
@@ -45,11 +92,16 @@ class NotificationService: UNNotificationServiceExtension {
                     if let attachment = attachment {
                         bestAttemptContent.attachments = [attachment]
                     }
+                    var title = "Shared a Video"
+                    if let contact = content.userInfo[CSPushConstants.contactName] as? String {
+                        title = contact + title
+                    }
+                    bestAttemptContent.title = title
                     contentHandler(bestAttemptContent)
                 }
             } else {
                 contentHandler(bestAttemptContent)
-            }
+            }*/
         }
     }
     

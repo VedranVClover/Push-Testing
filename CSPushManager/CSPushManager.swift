@@ -65,28 +65,28 @@ class CSPushManager: NSObject {
     // MARK: - CATEGORIES
     
     var textMessageCategory: UNNotificationCategory {
-        return UNNotificationCategory(identifier: CSPushConstants.txtMessageCategory,
+        return UNNotificationCategory(identifier: CSPushConstants.PushCategory.txtMessageCategory.rawValue,
                                       actions: [replyAction, viewInAppAction, dismissAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
     
     var videoShareCategory: UNNotificationCategory {
-        return UNNotificationCategory(identifier: CSPushConstants.shareVideo,
+        return UNNotificationCategory(identifier: CSPushConstants.PushCategory.shareVideo.rawValue,
                                       actions: [replyAction, viewInAppAction, dismissAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
     
     var imageShareCategory: UNNotificationCategory {
-        return UNNotificationCategory(identifier: CSPushConstants.shareImage,
+        return UNNotificationCategory(identifier: CSPushConstants.PushCategory.shareImage.rawValue,
                                       actions: [replyAction, viewInAppAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
     
     var urlShareCategory: UNNotificationCategory {
-        return UNNotificationCategory(identifier: CSPushConstants.shareUrl,
+        return UNNotificationCategory(identifier: CSPushConstants.PushCategory.shareUrl.rawValue,
                                       actions: [replyAction, openUrlAction, viewInAppAction],
                                       intentIdentifiers: [],
                                       options: [])
@@ -96,7 +96,7 @@ class CSPushManager: NSObject {
     // MARK: - ACTIONS
     
     var replyAction: UNNotificationAction {
-        return UNTextInputNotificationAction(identifier: CSPushConstants.replyAction, title: "Reply", options: [])
+        return UNTextInputNotificationAction(identifier: CSPushConstants.replyAction, title: "Quick Reply", options: [])
     }
     
     var viewInAppAction: UNNotificationAction {
@@ -132,29 +132,42 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  
  {
  "aps": {
- "alert": "Hello!",
+ "alert": "Check out this Gif",
  "sound": "default",
  "mutable-content": 1,
  "category" : "share_image",
  "badge": 1
  },
+ "contact_name" : "Jura",
  "attachment-url": "https://media2.giphy.com/avatars/100soft/WahNEDdlGjRZ.gif"
  }
  
  
  SHARE VIDEO
  
- 
- 
  {
  "aps": {
- "alert": "Hello!",
+ "alert": "Check out this Video",
  "sound": "default",
  "mutable-content": 1,
  "category" : "share_video",
  "badge": 1
  },
+ "contact_name" : "Jura",
  "attachment-url": "https://youtu.be/x3bfa3DZ8JM"
+ }
+ 
+ WRITE MESSAGE
+ 
+ {
+ "aps": {
+ "alert": "Hey what's up Dude?",
+ "sound": "default",
+ "mutable-content": 1,
+ "category" : "txt_message",
+ "badge": 1
+ },
+ "contact_name" : "Jura"
  }
  
  */
