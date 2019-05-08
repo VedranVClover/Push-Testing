@@ -66,7 +66,7 @@ class CSPushManager: NSObject {
     
     var textMessageCategory: UNNotificationCategory {
         return UNNotificationCategory(identifier: CSPushConstants.PushCategory.txtMessageCategory.rawValue,
-                                      actions: [replyAction, viewInAppAction, dismissAction],
+                                      actions: [replyAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
@@ -155,6 +155,7 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  },
  "contact_name" : "Jura",
  "attachment-url": "https://youtu.be/x3bfa3DZ8JM"
+ "chat_id" : "fasdf35434"
  }
  
  WRITE MESSAGE

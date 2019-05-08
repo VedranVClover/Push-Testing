@@ -75,33 +75,6 @@ class NotificationService: UNNotificationServiceExtension {
             default :
                 contentHandler(bestAttemptContent)
             }
-            
-            /*
-            if bestAttemptContent.categoryIdentifier == CSPushConstants.PushCategory.shareImage.rawValue,
-                 {
-                
-            } else if bestAttemptContent.categoryIdentifier == CSPushConstants.PushCategory.shareVideo.rawValue,
-                let content = request.content.mutableCopy() as? UNMutableNotificationContent,
-                let attachmentUrlString = content.userInfo["attachment-url"] as? String,
-                let attachmentUrl = URL(string: attachmentUrlString) {
-                let videoIdentifier = attachmentUrl.lastPathComponent
-                guard let thumbnailUrl = URL(string: "https://img.youtube.com/vi/\(videoIdentifier)/0.jpg") else {
-                    return contentHandler(bestAttemptContent)
-                }
-                downloadWithURL(downloadUrl: thumbnailUrl, filename: "image.jpg") { attachment in
-                    if let attachment = attachment {
-                        bestAttemptContent.attachments = [attachment]
-                    }
-                    var title = "Shared a Video"
-                    if let contact = content.userInfo[CSPushConstants.contactName] as? String {
-                        title = contact + title
-                    }
-                    bestAttemptContent.title = title
-                    contentHandler(bestAttemptContent)
-                }
-            } else {
-                contentHandler(bestAttemptContent)
-            }*/
         }
     }
     
