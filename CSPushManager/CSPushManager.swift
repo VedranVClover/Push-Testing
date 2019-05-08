@@ -80,14 +80,14 @@ class CSPushManager: NSObject {
     
     var imageShareCategory: UNNotificationCategory {
         return UNNotificationCategory(identifier: CSPushConstants.PushCategory.shareImage.rawValue,
-                                      actions: [replyAction, viewInAppAction],
+                                      actions: [replyAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
     
     var urlShareCategory: UNNotificationCategory {
         return UNNotificationCategory(identifier: CSPushConstants.PushCategory.shareUrl.rawValue,
-                                      actions: [replyAction, openUrlAction, viewInAppAction],
+                                      actions: [replyAction],
                                       intentIdentifiers: [],
                                       options: [])
     }
@@ -96,7 +96,7 @@ class CSPushManager: NSObject {
     // MARK: - ACTIONS
     
     var replyAction: UNNotificationAction {
-        return UNTextInputNotificationAction(identifier: CSPushConstants.replyAction, title: "Quick Reply", options: [])
+        return UNTextInputNotificationAction(identifier: CSPushConstants.replyAction, title: "Reply", options: [])
     }
     
     var viewInAppAction: UNNotificationAction {
@@ -169,6 +169,20 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  "badge": 1
  },
  "contact_name" : "Jura"
+ }
+ 
+ SHARE URL
+ 
+ {
+ "aps": {
+ "alert": "Check out this Link!",
+ "sound": "default",
+ "mutable-content": 1,
+ "category" : "share_url",
+ "badge": 1
+ },
+ "contact_name" : "Jura",
+ "shared_url" : "https://www.amazon.de/"
  }
  
  */

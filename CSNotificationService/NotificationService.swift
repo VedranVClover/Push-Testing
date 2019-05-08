@@ -23,7 +23,7 @@ class NotificationService: UNNotificationServiceExtension {
             
             //Share Image
             switch bestAttemptContent.categoryIdentifier {
-                
+            // MARK: - SHARE IMAGE HANDLER
             case CSPushConstants.PushCategory.shareImage.rawValue :
                 guard let content = request.content.mutableCopy() as? UNMutableNotificationContent,
                     let attachmentUrlString = content.userInfo["attachment-url"] as? String,
@@ -43,6 +43,7 @@ class NotificationService: UNNotificationServiceExtension {
                     contentHandler(bestAttemptContent)
                 }
                 
+            // MARK: - SHARE VIDEO HANDLER
             case CSPushConstants.PushCategory.shareVideo.rawValue :
                 guard let content = request.content.mutableCopy() as? UNMutableNotificationContent,
                     let attachmentUrlString = content.userInfo["attachment-url"] as? String,
@@ -64,13 +65,28 @@ class NotificationService: UNNotificationServiceExtension {
                         .pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)
                     contentHandler(bestAttemptContent)
                 }
-                
+               
+            // MARK: - TEXT MESSAGE HANDLER
             case CSPushConstants.PushCategory.txtMessageCategory.rawValue :
                 guard let content = request.content.mutableCopy() as? UNMutableNotificationContent else {
                     contentHandler(bestAttemptContent)
                     break
                 }
                 bestAttemptContent.title = "\(CSPushConstants.PushCategory.txtMessageCategory.pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)) \(bestAttemptContent.title)"
+                contentHandler(bestAttemptContent)
+                
+            // MARK: - SHARE URL HANDLER
+            case CSPushConstants.PushCategory.shareUrl.rawValue :
+                guard let content = request.content.mutableCopy() as? UNMutableNotificationContent else {
+                    contentHandler(bestAttemptContent)
+                    break
+                }
+                bestAttemptContent.title = "\(CSPushConstants.PushCategory.txtMessageCategory.pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)) \(bestAttemptContent.title)"
+                if let url = content.userInfo[CSPushConstants.sharedUrl] as? String,
+                    !url.isEmpty {
+                    bestAttemptContent.body = bestAttemptContent.body + " \(url)"
+                }
+                
                 contentHandler(bestAttemptContent)
             default :
                 contentHandler(bestAttemptContent)

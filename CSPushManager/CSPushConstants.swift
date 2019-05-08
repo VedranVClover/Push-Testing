@@ -39,6 +39,7 @@ class CSPushConstants {
     static let openUrlAction = "OPEN_URL"
     
     static let contactName = "contact_name"
+    static let sharedUrl = "shared_url"
     
 }
 
