@@ -16,8 +16,8 @@ class CSPushConstants {
         case shareUrl = "share_url"
         case shareVideo = "share_video"
         
-        func pushDescription(userName: String?) -> String {
-            var descr = "\(userName ?? "Contact") "
+        func pushDescription(contacts: [String]?) -> String {
+            var descr = "\(contacts?.joined(separator: ", ") ?? "Contact") "
             switch self {
             case .shareImage:
                 descr += "shared an Image"
@@ -38,7 +38,8 @@ class CSPushConstants {
     static let dismissAction = "DISMISS"
     static let openUrlAction = "OPEN_URL"
     
-    static let contactName = "contact_name"
+//    static let contactName = "contact_name"
+    static let groupContacts = "group_contacts"
     static let sharedUrl = "shared_url"
     static let chatId = "chat_id"
     

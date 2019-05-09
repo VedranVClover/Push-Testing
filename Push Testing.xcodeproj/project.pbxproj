@@ -13,6 +13,9 @@
 		0B1B410C2276D02D0068E3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B1B410B2276D02D0068E3EF /* Assets.xcassets */; };
 		0B1B410F2276D02D0068E3EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B1B410D2276D02D0068E3EF /* LaunchScreen.storyboard */; };
 		0B4A5C63227C6E37008D3505 /* CSPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5C62227C6E37008D3505 /* CSPushManager.swift */; };
+		0B5601D2228420EF00EEB570 /* MockChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5601D0228420EF00EEB570 /* MockChatCell.swift */; };
+		0B5601D3228420EF00EEB570 /* MockChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B5601D1228420EF00EEB570 /* MockChatCell.xib */; };
+		0B5601D52284251400EEB570 /* CSChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5601D42284251400EEB570 /* CSChat.swift */; };
 		0B78626F228057BF006E92F2 /* CSPushConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B78626E228057BF006E92F2 /* CSPushConstants.swift */; };
 		0B786271228058B1006E92F2 /* PushConstants.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B786270228058B1006E92F2 /* PushConstants.plist */; };
 		0B8352232280557600110DDD /* libCSConstants.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8352222280557600110DDD /* libCSConstants.a */; };
@@ -58,6 +61,9 @@
 		0B1B41102276D02D0068E3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B1B41162276E2490068E3EF /* Push Testing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Push Testing.entitlements"; sourceTree = "<group>"; };
 		0B4A5C62227C6E37008D3505 /* CSPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSPushManager.swift; sourceTree = "<group>"; };
+		0B5601D0228420EF00EEB570 /* MockChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatCell.swift; sourceTree = "<group>"; };
+		0B5601D1228420EF00EEB570 /* MockChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MockChatCell.xib; sourceTree = "<group>"; };
+		0B5601D42284251400EEB570 /* CSChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSChat.swift; sourceTree = "<group>"; };
 		0B78626E228057BF006E92F2 /* CSPushConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSPushConstants.swift; sourceTree = "<group>"; };
 		0B786270228058B1006E92F2 /* PushConstants.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PushConstants.plist; sourceTree = "<group>"; };
 		0B8352222280557600110DDD /* libCSConstants.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCSConstants.a; sourceTree = "<group>"; };
@@ -121,6 +127,8 @@
 				0B1B41042276D02B0068E3EF /* AppDelegate.swift */,
 				0B1B41062276D02C0068E3EF /* ViewController.swift */,
 				0B1B41082276D02C0068E3EF /* Main.storyboard */,
+				0B5601D0228420EF00EEB570 /* MockChatCell.swift */,
+				0B5601D1228420EF00EEB570 /* MockChatCell.xib */,
 				0B1B410B2276D02D0068E3EF /* Assets.xcassets */,
 				0B1B410D2276D02D0068E3EF /* LaunchScreen.storyboard */,
 				0B1B41102276D02D0068E3EF /* Info.plist */,
@@ -134,6 +142,7 @@
 			children = (
 				0B4A5C62227C6E37008D3505 /* CSPushManager.swift */,
 				0B78626E228057BF006E92F2 /* CSPushConstants.swift */,
+				0B5601D42284251400EEB570 /* CSChat.swift */,
 			);
 			path = CSPushManager;
 			sourceTree = "<group>";
@@ -223,6 +232,9 @@
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -259,6 +271,7 @@
 			files = (
 				0B1B410F2276D02D0068E3EF /* LaunchScreen.storyboard in Resources */,
 				0B1B410C2276D02D0068E3EF /* Assets.xcassets in Resources */,
+				0B5601D3228420EF00EEB570 /* MockChatCell.xib in Resources */,
 				0B786271228058B1006E92F2 /* PushConstants.plist in Resources */,
 				0B1B410A2276D02C0068E3EF /* Main.storyboard in Resources */,
 			);
@@ -356,8 +369,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B1B41072276D02C0068E3EF /* ViewController.swift in Sources */,
+				0B5601D52284251400EEB570 /* CSChat.swift in Sources */,
 				0B4A5C63227C6E37008D3505 /* CSPushManager.swift in Sources */,
 				0B1B41052276D02C0068E3EF /* AppDelegate.swift in Sources */,
+				0B5601D2228420EF00EEB570 /* MockChatCell.swift in Sources */,
 				0B78626F228057BF006E92F2 /* CSPushConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

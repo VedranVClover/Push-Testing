@@ -39,7 +39,7 @@ class NotificationService: UNNotificationServiceExtension {
                     bestAttemptContent.title = CSPushConstants
                         .PushCategory
                         .shareImage
-                        .pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)
+                        .pushDescription(contacts: content.userInfo[CSPushConstants.groupContacts] as? [String])
                     contentHandler(bestAttemptContent)
                 }
                 
@@ -62,7 +62,7 @@ class NotificationService: UNNotificationServiceExtension {
                     bestAttemptContent.title = CSPushConstants
                         .PushCategory
                         .shareVideo
-                        .pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)
+                        .pushDescription(contacts: content.userInfo[CSPushConstants.groupContacts] as? [String])
                     contentHandler(bestAttemptContent)
                 }
                
@@ -72,7 +72,7 @@ class NotificationService: UNNotificationServiceExtension {
                     contentHandler(bestAttemptContent)
                     break
                 }
-                bestAttemptContent.title = "\(CSPushConstants.PushCategory.txtMessageCategory.pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)) \(bestAttemptContent.title)"
+                bestAttemptContent.title = "\(CSPushConstants.PushCategory.txtMessageCategory.pushDescription(contacts: content.userInfo[CSPushConstants.groupContacts] as? [String])) \(bestAttemptContent.title)"
                 contentHandler(bestAttemptContent)
                 
             // MARK: - SHARE URL HANDLER
@@ -81,7 +81,7 @@ class NotificationService: UNNotificationServiceExtension {
                     contentHandler(bestAttemptContent)
                     break
                 }
-                bestAttemptContent.title = "\(CSPushConstants.PushCategory.txtMessageCategory.pushDescription(userName: content.userInfo[CSPushConstants.contactName] as? String)) \(bestAttemptContent.title)"
+                bestAttemptContent.title = "\(CSPushConstants.PushCategory.txtMessageCategory.pushDescription(contacts: content.userInfo[CSPushConstants.groupContacts] as? [String])) \(bestAttemptContent.title)"
                 if let url = content.userInfo[CSPushConstants.sharedUrl] as? String,
                     !url.isEmpty {
                     bestAttemptContent.body = bestAttemptContent.body + " \(url)"

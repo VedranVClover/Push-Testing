@@ -19,10 +19,10 @@ class CSPushManager: NSObject {
     
     public static let instance = CSPushManager()
     
-    public let unreadChats:BehaviorSubject<[String]> = BehaviorSubject(value: [])
+    public let unreadChats:BehaviorSubject<[CSChat]> = BehaviorSubject(value: [])
     
-    let newUnreadChat:PublishSubject<String> = PublishSubject.init()
-    let seenChat:PublishSubject<String> = PublishSubject.init()
+    let newUnreadChat:PublishSubject<CSChat> = PublishSubject.init()
+    let seenChat:PublishSubject<CSChat> = PublishSubject.init()
     
     let bag = DisposeBag()
     
@@ -34,18 +34,17 @@ class CSPushManager: NSObject {
         
         newUnreadChat
         .asObservable()
-            .withLatestFrom(unreadChats.asObservable()) { newChat, allChatIds -> [String] in
-                guard !allChatIds.contains(newChat) else { return allChatIds }
-                var allChatIdsMutable = allChatIds
-                allChatIdsMutable.append(newChat)
-                return allChatIdsMutable
+            .withLatestFrom(unreadChats.asObservable()) { newChat, allChatIds -> [CSChat] in
+                var mutableChats = allChatIds.filter{ $0 != newChat }
+                mutableChats.append(newChat)
+                return mutableChats
         }
         .bind(to: unreadChats)
         .disposed(by: bag)
         
         seenChat
         .asObserver()
-            .withLatestFrom(unreadChats.asObservable()) { seenChatId, allChatIds -> [String] in
+            .withLatestFrom(unreadChats.asObservable()) { seenChatId, allChatIds -> [CSChat] in
                 return allChatIds.filter{ $0 != seenChatId }
         }
         .bind(to: unreadChats)
@@ -62,7 +61,9 @@ class CSPushManager: NSObject {
             .disposed(by: bag)
         
         unreadChats
-            .map { $0.count }
+            .map { $0.reduce(0, { result, chat in
+                result + chat.badgeNumber
+            })}
             .debug("Unread Chats Count Observable", trimOutput: true)
             .subscribe(onNext: { numberOfChats in
                 UIApplication.shared.applicationIconBadgeNumber = numberOfChats
@@ -162,12 +163,15 @@ class CSPushManager: NSObject {
     // MARK: - HANDLING PUSH BADGE NUMBER
     
     func didReceivePushNotification(withUserInfo userInfo: [AnyHashable : Any]) {
-        guard let chatId = userInfo[CSPushConstants.chatId] as? String else { return }
-        self.newUnreadChat.on(.next(chatId))
+        guard let chatId = userInfo[CSPushConstants.chatId] as? String,
+            let contacts = userInfo[CSPushConstants.groupContacts] as? [String],
+            let apps = userInfo["aps"] as? [String : Any],
+            let budgeNumber = apps["badge"] as? Int else { return }
+        self.newUnreadChat.on(.next(CSChat(chatId: chatId, contacts: contacts, badgeNumber: budgeNumber)))
     }
     
-    func chatSeen(chatId: String) {
-        self.seenChat.on(.next(chatId))
+    func chatSeen(chatId: String, contactName: String) {
+        self.seenChat.on(.next(CSChat(chatId: chatId, contacts: [contactName])))
     }
     
     func dismissAllBadges() {
@@ -199,22 +203,6 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
 
 
 /*
- SHARE IMAGE
- 
- {
- "aps": {
- "alert": "Check out this Gif",
- "sound": "default",
- "mutable-content": 1,
- "category" : "share_image",
- "badge": 1
- },
- "contact_name" : "Jura",
- "attachment-url": "https://media2.giphy.com/avatars/100soft/WahNEDdlGjRZ.gif"
- "chat_id" : "fasdf35434"
- }
- 
- 
  SHARE VIDEO
  
  {
@@ -223,12 +211,14 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  "sound": "default",
  "mutable-content": 1,
  "category" : "share_video",
- "badge": 1
+ "badge": 1,
+ "content-available" : 1
  },
- "contact_name" : "Jura",
- "attachment-url": "https://youtu.be/x3bfa3DZ8JM"
- "chat_id" : "fasdf35434"
+ "group_contacts" : ["Jura"],
+ "attachment-url": "https://youtu.be/x3bfa3DZ8JM",
+ "chat_id" : "1ur4"
  }
+ 
  
  WRITE MESSAGE
  
@@ -238,11 +228,13 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  "sound": "default",
  "mutable-content": 1,
  "category" : "txt_message",
- "badge": 1
+ "badge": 3,
+ "content-available" : 1
  },
- "contact_name" : "Jura"
- "chat_id" : "fasdf35434"
+ "group_contacts" : ["Sinisa"],
+ "chat_id" : "51n154"
  }
+ 
  
  SHARE URL
  
@@ -252,12 +244,31 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  "sound": "default",
  "mutable-content": 1,
  "category" : "share_url",
- "badge": 1
+ "badge": 1,
+ "content-available" : 1
  },
- "contact_name" : "Jura",
- "shared_url" : "https://www.amazon.de/"
- "chat_id" : "fasdf35434"
+ "group_contacts" : ["Jura"],
+ "shared_url" : "https://www.amazon.de/",
+ "chat_id" : "1ur4"
  }
+ 
+ 
+ SHARE IMAGE
+ 
+ {
+ "aps": {
+ "alert": "Check out this Gif",
+ "sound": "default",
+ "mutable-content": 1,
+ "category" : "share_image",
+ "badge": 1,
+ "content-available" : 1
+ },
+ "group_contacts" : ["Ivo"],
+ "attachment-url": "https://media2.giphy.com/avatars/100soft/WahNEDdlGjRZ.gif",
+ "chat_id" : "1v0"
+ }
+ 
  
  */
 
