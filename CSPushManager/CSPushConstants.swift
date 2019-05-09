@@ -40,6 +40,7 @@ class CSPushConstants {
     
     static let contactName = "contact_name"
     static let sharedUrl = "shared_url"
+    static let chatId = "chat_id"
     
 }
 

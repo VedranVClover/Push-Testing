@@ -48,44 +48,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CSPushManager.instance.registeredForRemoteNotification(deviceToken)
     }
     
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+    }
+    
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register: \(error)")
     }
-    /*
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge]) {
-                [weak self] granted, error in
-                
-                print("Permission granted: \(granted)")
-                guard granted else { return }
-                
-                let viewAction = UNNotificationAction(
-                    identifier: "VIEW", title: "View",
-                    options: [.foreground])
-                
-
-                let newsCategory = UNNotificationCategory(
-                    identifier: "NEWS", actions: [viewAction],
-                    intentIdentifiers: [], options: [])
-                
-
-                UNUserNotificationCenter.current().setNotificationCategories([newsCategory])
-                
-                self?.getNotificationSettings()
-        }
-    }
-    
-    func getNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            print("Notification settings: \(settings)")
-            
-            guard settings.authorizationStatus == .authorized else { return }
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
-            }
-        }
-    }*/
 
 }
 
