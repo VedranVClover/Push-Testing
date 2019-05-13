@@ -51,20 +51,16 @@ class NotificationService: UNNotificationServiceExtension {
                         contentHandler(bestAttemptContent)
                         break
                 }
-                let videoIdentifier = attachmentUrl.lastPathComponent
-                guard let thumbnailUrl = URL(string: "https://img.youtube.com/vi/\(videoIdentifier)/0.jpg") else {
-                    return contentHandler(bestAttemptContent)
+                if let videoUrlAttachment = try? UNNotificationAttachment(identifier: "video_url",
+                                                                       url: attachmentUrl,
+                                                                       options: nil) {
+                    bestAttemptContent.attachments = [videoUrlAttachment]
                 }
-                downloadWithURL(downloadUrl: thumbnailUrl, filename: "image.jpg") { attachment in
-                    if let attachment = attachment {
-                        bestAttemptContent.attachments = [attachment]
-                    }
-                    bestAttemptContent.title = CSPushConstants
-                        .PushCategory
-                        .shareVideo
-                        .pushDescription(contacts: content.userInfo[CSPushConstants.groupContacts] as? [String])
-                    contentHandler(bestAttemptContent)
-                }
+                bestAttemptContent.title = CSPushConstants
+                    .PushCategory
+                    .shareImage
+                    .pushDescription(contacts: content.userInfo[CSPushConstants.groupContacts] as? [String])
+                contentHandler(bestAttemptContent)
                
             // MARK: - TEXT MESSAGE HANDLER
             case CSPushConstants.PushCategory.txtMessageCategory.rawValue :

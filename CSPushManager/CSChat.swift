@@ -17,7 +17,6 @@ class CSChat {
         self.chatId = chatId
         self.contacts = contacts
         self.badgeNumber = badgeNumber
-//        super.init()
     }
 }
 

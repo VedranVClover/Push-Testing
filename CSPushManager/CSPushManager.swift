@@ -261,7 +261,7 @@ extension CSPushManager: UNUserNotificationCenterDelegate {
  "sound": "default",
  "mutable-content": 1,
  "category" : "share_image",
- "badge": 1,
+ "badge": 2,
  "content-available" : 1
  },
  "group_contacts" : ["Ivo"],
