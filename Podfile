@@ -22,3 +22,9 @@ target 'CSNotificationService' do
   frameworks
   use_frameworks!
 end
+
+target 'CSVideoNotification' do
+  frameworks
+  use_frameworks!
+end
+

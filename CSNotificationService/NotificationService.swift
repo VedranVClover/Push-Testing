@@ -51,11 +51,11 @@ class NotificationService: UNNotificationServiceExtension {
                         contentHandler(bestAttemptContent)
                         break
                 }
-                if let videoUrlAttachment = try? UNNotificationAttachment(identifier: "video_url",
-                                                                       url: attachmentUrl,
-                                                                       options: nil) {
-                    bestAttemptContent.attachments = [videoUrlAttachment]
-                }
+//                if let videoUrlAttachment = try? UNNotificationAttachment(identifier: "video_url.mp4",
+//                                                                       url: attachmentUrl,
+//                                                                       options: nil) {
+//                    bestAttemptContent.attachments = [videoUrlAttachment]
+//                }
                 bestAttemptContent.title = CSPushConstants
                     .PushCategory
                     .shareImage
