@@ -58,7 +58,7 @@ class NotificationService: UNNotificationServiceExtension {
 //                }
                 bestAttemptContent.title = CSPushConstants
                     .PushCategory
-                    .shareImage
+                    .shareVideo
                     .pushDescription(contacts: content.userInfo[CSPushConstants.groupContacts] as? [String])
                 contentHandler(bestAttemptContent)
                
