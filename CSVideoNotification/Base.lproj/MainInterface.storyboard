@@ -22,11 +22,19 @@
                                 <rect key="frame" x="141.5" y="21.5" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PFI-IP-xXt" customClass="AnimatablePlayButton" customModule="CSVideoNotification" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="PFI-IP-xXt" secondAttribute="trailing" id="GnG-E7-1cU"/>
+                            <constraint firstItem="PFI-IP-xXt" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="ZsO-4V-LNH"/>
                             <constraint firstItem="aRY-pE-KDl" firstAttribute="centerX" secondItem="S3S-Oj-5AN" secondAttribute="centerX" id="cbZ-Vg-p1C"/>
+                            <constraint firstAttribute="bottom" secondItem="PFI-IP-xXt" secondAttribute="bottom" id="dKM-wC-uh2"/>
                             <constraint firstItem="aRY-pE-KDl" firstAttribute="centerY" secondItem="S3S-Oj-5AN" secondAttribute="centerY" id="kcj-Rq-7KF"/>
+                            <constraint firstItem="PFI-IP-xXt" firstAttribute="top" secondItem="S3S-Oj-5AN" secondAttribute="top" id="qrS-Cj-gbg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2BE-c3-nQJ"/>
                     </view>
