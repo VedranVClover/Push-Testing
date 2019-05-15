@@ -7,19 +7,28 @@
 //
 
 import UIKit
+import RxSwift
 
 class AnimatablePlayButton: UIView {
     
+    enum ButtonState {
+        case play, pause
+    }
+    
     let radius: CGFloat = 50.0
     let background = UIColor.lightGray.withAlphaComponent(0.7)
-    let strokeColor = UIColor.blue
+    let strokeColor = UIColor(red: 2.0 / 255.0, green: 136 / 255.0, blue: 209 / 255.0, alpha: 1.0)
+    
+    let changeState: BehaviorSubject<ButtonState> = BehaviorSubject(value: .play)
+    var onFrameChanged: BehaviorSubject<CGRect>!
+    let bag = DisposeBag()
     
     var circleLeftBar: CircleOrLeftBar!
     var triangleRightBar: TriangleOrRightBar!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
+        self.setupView(withFrame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -28,134 +37,51 @@ class AnimatablePlayButton: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setupView()
+        self.setupView(withFrame: self.bounds)
     }
     
-    var insetedRectangle: CGRect {
-        let ownSize = self.bounds.size
-        return self.bounds.insetBy(dx: ownSize.width / 2 - radius, dy: ownSize.height / 2 - radius)
-    }
+    
     
 }
 
 
 extension AnimatablePlayButton {
-    private func setupView() {
+    private func setupView(withFrame: CGRect) {
         self.backgroundColor = background
         
-        self.circleLeftBar = CircleOrLeftBar(withinRect: insetedRectangle, color: strokeColor)
+        self.onFrameChanged = BehaviorSubject(value: withFrame)
+        
+        self.circleLeftBar = CircleOrLeftBar(withinRect: withFrame, color: strokeColor)
         self.circleLeftBar.frame = self.bounds
         self.layer.addSublayer(circleLeftBar)
         
-        self.triangleRightBar = TriangleOrRightBar(withinRect: insetedRectangle, color: strokeColor)
+        self.triangleRightBar = TriangleOrRightBar(withinRect: withFrame, color: strokeColor)
         self.triangleRightBar.frame = self.bounds
         self.layer.addSublayer(triangleRightBar)
+        
+        
+        let stateChangedObserver = Observable.combineLatest(onFrameChanged,
+                                                            changeState) { [unowned self] frame, state in
+                                                                return (frame.insectRectBy(delta: self.radius), state)
+            }
+            .debug("AnimatableButtonState", trimOutput: true)
+            .distinctUntilChanged { $0.0 == $1.0 && $0.1 == $1.1 }
+            .share()
+        
+        stateChangedObserver
+            .bind(to: circleLeftBar.recalculateListener)
+            .disposed(by: bag)
+        
+        stateChangedObserver
+            .bind(to: triangleRightBar.recalculateListener)
+            .disposed(by: bag)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        circleLeftBar.drawShapes(withRect: self.insetedRectangle)
-        triangleRightBar.drawShapes(withRect: self.insetedRectangle)
-    }
 }
 
 
 extension AnimatablePlayButton {
-    class CircleOrLeftBar: CAShapeLayer {
-        var rect: CGRect!
-        
-        var isPaused = false {
-            didSet {
-                self.drawShapes(withRect: rect)
-            }
-        }
-        
-        required init(withinRect rect: CGRect, color: UIColor) {
-            self.rect = rect
-            super.init()
-            self.strokeColor = color.cgColor
-            self.fillColor = UIColor.clear.cgColor
-            self.lineWidth = 4.0
-            self.backgroundColor = UIColor.clear.cgColor
-            drawShapes(withRect: rect)
-        }
-        
-        func drawShapes(withRect rect: CGRect) {
-            self.rect = rect
-            let path = isPaused ? pauseLeftPath : circlePath
-            self.path = path.cgPath
-        }
-        
-        required init?(coder aDecoder: NSCoder) {
-            super.init(coder: aDecoder)
-        }
-        
-        var pauseLeftPath: UIBezierPath {
-            let path = UIBezierPath(rect: CGRect(x: rect.origin.x + 17,
-                                                 y: rect.origin.y + 5,
-                                                 width: 3,
-                                                 height: 39))
-            path.lineJoinStyle = .round
-            return path
-        }
-        
-        var circlePath: UIBezierPath {
-            let ovalPath = UIBezierPath(ovalIn: rect)
-            return ovalPath
-        }
-    }
     
-    class TriangleOrRightBar: CAShapeLayer {
-        var rect: CGRect!
-        
-        var isPaused = false {
-            didSet {
-                self.drawShapes(withRect: rect)
-            }
-        }
-        
-        required init(withinRect rect: CGRect, color: UIColor) {
-            self.rect = rect
-            super.init()
-            self.strokeColor = color.cgColor
-            self.fillColor = UIColor.clear.cgColor
-            self.lineWidth = 4.0
-            self.backgroundColor = UIColor.clear.cgColor
-            self.lineJoin = .round
-            drawShapes(withRect: rect)
-        }
-        
-        func drawShapes(withRect rect: CGRect) {
-            self.rect = rect
-            let path = isPaused ? pauseRightPath : trianglePath
-            self.path = path.cgPath
-        }
-        
-        required init?(coder aDecoder: NSCoder) {
-            super.init(coder: aDecoder)
-        }
-        
-        var trianglePath: UIBezierPath {
-            let bezierPath = UIBezierPath()
-            bezierPath.move(to: CGPoint(x: rect.minX + 0.28000 * rect.width, y: rect.minY + 0.80000 * rect.height))
-            bezierPath.addLine(to: CGPoint(x: rect.minX + 0.28000 * rect.width, y: rect.minY + 0.20000 * rect.height))
-            bezierPath.addLine(to: CGPoint(x: rect.minX + 0.90000 * rect.width, y: rect.minY + 0.52000 * rect.height))
-            bezierPath.addLine(to: CGPoint(x: rect.minX + 0.28000 * rect.width, y: rect.minY + 0.80000 * rect.height))
-
-            bezierPath.close()
-            return bezierPath
-        }
-        
-        
-        
-        var pauseRightPath: UIBezierPath {
-            let path = UIBezierPath(rect: CGRect(x: rect.origin.x + 29,
-                                                 y: rect.origin.y + 5,
-                                                 width: 3,
-                                                 height: 39))
-            return path
-        }
-    }
     
 }
 

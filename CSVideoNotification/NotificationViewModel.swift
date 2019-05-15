@@ -69,10 +69,12 @@ extension NotificationViewModel {
             .observe(AVPlayer.Status.self, "status")
             .map{ $0 == .readyToPlay }
             .asObservable()
-            .debug("Player Status Observer", trimOutput: true)
+//            .debug("Player Status Observer", trimOutput: true)
             .share()
         
         playerStatus
+            .map{ !$0 }
+            .delay(2.0, scheduler: MainScheduler.instance)
             .bind(to: loading)
             .disposed(by: bag)
         

@@ -16,7 +16,9 @@ import RxSwift
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
 
     @IBOutlet var label: UILabel?
+    @IBOutlet weak var playerContainer: UIView!
     @IBOutlet weak var progressSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var playPausebutton: AnimatablePlayButton!
     
     var viewModel: NotificationViewModel!
     
@@ -60,12 +62,22 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
                 return
         }
         
-        viewModel.start(withUrl: url, parentLayer: self.view.layer)
+        viewModel.start(withUrl: url, parentLayer: self.playerContainer.layer)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         viewModel.onBoundsChanged.on(.next(self.view.bounds))
+        
+        playPausebutton
+            .onFrameChanged
+            .on(.next(playPausebutton.bounds))
+        
+        viewModel
+            .playerIsPlaying
+            .map{ $0 ? AnimatablePlayButton.ButtonState.pause : AnimatablePlayButton.ButtonState.play }
+            .bind(to: playPausebutton.changeState)
+            .disposed(by: bag)
     }
 
 }

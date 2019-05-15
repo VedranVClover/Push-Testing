@@ -26,6 +26,8 @@
 		0BB518C122806BE400DAD064 /* CSNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0BB518BA22806BE400DAD064 /* CSNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0BB518C922806BFC00DAD064 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB518BC22806BE400DAD064 /* NotificationService.swift */; };
 		0BB518CA2280732B00DAD064 /* CSPushConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B78626E228057BF006E92F2 /* CSPushConstants.swift */; };
+		0BD301D6228C363800DF55BB /* AnimatablePlayButtonLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD301D5228C363800DF55BB /* AnimatablePlayButtonLayers.swift */; };
+		0BD301D8228C3C3A00DF55BB /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD301D7228C3C3A00DF55BB /* CGRectExtension.swift */; };
 		0BEBE0C12289A3CF00CCC90E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEBE0C02289A3CF00CCC90E /* NotificationViewModel.swift */; };
 		0BF74B68228AA3BD00CCC93C /* AnimatablePlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF74B67228AA3BD00CCC93C /* AnimatablePlayButton.swift */; };
 		3161ACFCCA4673F408B5D0DC /* Pods_Push_Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E267F9046EBFFAFD096F159 /* Pods_Push_Testing.framework */; };
@@ -90,6 +92,8 @@
 		0BB518BA22806BE400DAD064 /* CSNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CSNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BB518BC22806BE400DAD064 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		0BB518BE22806BE400DAD064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BD301D5228C363800DF55BB /* AnimatablePlayButtonLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatablePlayButtonLayers.swift; sourceTree = "<group>"; };
+		0BD301D7228C3C3A00DF55BB /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		0BEBE0C02289A3CF00CCC90E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		0BF74B67228AA3BD00CCC93C /* AnimatablePlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatablePlayButton.swift; sourceTree = "<group>"; };
 		45D6112377F3582AF4831BE9 /* Pods-CSVideoNotification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSVideoNotification.debug.xcconfig"; path = "Target Support Files/Pods-CSVideoNotification/Pods-CSVideoNotification.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +183,8 @@
 				0BEBE0C02289A3CF00CCC90E /* NotificationViewModel.swift */,
 				0B21B498228969FB004270C8 /* MainInterface.storyboard */,
 				0BF74B67228AA3BD00CCC93C /* AnimatablePlayButton.swift */,
+				0BD301D7228C3C3A00DF55BB /* CGRectExtension.swift */,
+				0BD301D5228C363800DF55BB /* AnimatablePlayButtonLayers.swift */,
 				0B21B49B228969FB004270C8 /* Info.plist */,
 			);
 			path = CSVideoNotification;
@@ -486,8 +492,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD301D8228C3C3A00DF55BB /* CGRectExtension.swift in Sources */,
 				0B21B497228969FB004270C8 /* NotificationViewController.swift in Sources */,
 				0BF74B68228AA3BD00CCC93C /* AnimatablePlayButton.swift in Sources */,
+				0BD301D6228C363800DF55BB /* AnimatablePlayButtonLayers.swift in Sources */,
 				0BEBE0C12289A3CF00CCC90E /* NotificationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
