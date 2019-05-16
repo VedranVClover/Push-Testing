@@ -16,7 +16,7 @@ class AnimatablePlayButton: UIView {
         case play, pause
     }
     
-    let radius: CGFloat = 50.0
+    let radius: CGFloat = 30.0
     let background = UIColor.lightGray.withAlphaComponent(0.7)
     let strokeColor = UIColor(red: 2.0 / 255.0, green: 136 / 255.0, blue: 209 / 255.0, alpha: 1.0)
     
