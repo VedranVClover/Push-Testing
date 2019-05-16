@@ -9,16 +9,18 @@
 import UIKit
 import RxSwift
 
-class CircleOrLeftBar: CAShapeLayer {
+class CircleLayer: CAShapeLayer {
+    
     var rect: CGRect!
+    var isPaused = false
     
-    var recalculateListener: BehaviorSubject<(CGRect, AnimatablePlayButton.ButtonState)>!
-    
+    public var recalculateListener: BehaviorSubject<(CGRect, AnimatablePlayButton.ButtonState)>!
     let bag = DisposeBag()
     
     required init(withinRect rect: CGRect, color: UIColor) {
         self.rect = rect
         super.init()
+        
         self.strokeColor = color.cgColor
         self.fillColor = UIColor.clear.cgColor
         self.lineWidth = 4.0
@@ -30,23 +32,42 @@ class CircleOrLeftBar: CAShapeLayer {
         recalculateListener
             .skip(1)
             .subscribe(onNext: { [weak self] (rect, state) in
-                self?.isHidden = false
                 self?.drawShapes(withRect: rect, isPaused: state == .pause)
             })
             .disposed(by: bag)
-    }
-    
-    func drawShapes(withRect rect: CGRect, isPaused: Bool) {
-        self.rect = rect
-        let path = isPaused ? pauseLeftPath : circlePath
-        self.path = path.cgPath
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    var pauseLeftPath: UIBezierPath {
+    func drawShapes(withRect rect: CGRect, isPaused: Bool) {
+        self.rect = rect
+        let path = isPaused ? pauseModeShape : playModeShape
+        animatePpathChange(newPath: path)
+    }
+    
+    func animatePpathChange(newPath: UIBezierPath) {
+        let animation = CABasicAnimation(keyPath: "path")
+        animation.duration = 0.2
+        animation.fromValue = self.path
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.toValue = newPath.cgPath
+        animation.fillMode = CAMediaTimingFillMode.both
+        animation.isRemovedOnCompletion = false
+        
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { [weak self] in
+            self?.path = newPath.cgPath
+            self?.removeAllAnimations()
+        }
+        self.add(animation, forKey: nil)
+        CATransaction.commit()
+//        self.path = path.cgPath
+    }
+    
+    var pauseModeShape: UIBezierPath {
         let barWidth:CGFloat = rect.width * 0.1
         let barHeight:CGFloat = rect.height * 0.5
         let barOriginX: CGFloat = rect.origin.x + rect.width / 2 - barWidth - 8.0
@@ -55,48 +76,16 @@ class CircleOrLeftBar: CAShapeLayer {
         return path
     }
     
-    var circlePath: UIBezierPath {
+    var playModeShape: UIBezierPath {
         let ovalPath = UIBezierPath(ovalIn: rect)
         return ovalPath
     }
+    
 }
 
-class TriangleOrRightBar: CAShapeLayer {
-    var rect: CGRect!
-    
-    var recalculateListener: BehaviorSubject<(CGRect, AnimatablePlayButton.ButtonState)>!
-    let bag = DisposeBag()
-    
-    required init(withinRect rect: CGRect, color: UIColor) {
-        self.rect = rect
-        super.init()
-        self.strokeColor = color.cgColor
-        self.fillColor = UIColor.clear.cgColor
-        self.lineWidth = 4.0
-        self.backgroundColor = UIColor.clear.cgColor
-        self.lineJoin = .round
-        
-        recalculateListener = BehaviorSubject(value: (rect, .play))
-        
-        recalculateListener
-            .skip(1)
-            .subscribe(onNext: { [weak self] (rect, state) in
-                self?.drawShapes(withRect: rect, isPaused: state == .pause)
-            })
-            .disposed(by: bag)
-    }
-    
-    func drawShapes(withRect rect: CGRect, isPaused: Bool) {
-        self.rect = rect
-        let path = isPaused ? pauseRightPath : trianglePath
-        self.path = path.cgPath
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    var trianglePath: UIBezierPath {
+
+class TriangleLayer: CircleLayer {
+    override var playModeShape: UIBezierPath {
         let bezierPath = UIBezierPath()
         bezierPath.move(to: CGPoint(x: rect.minX + 0.28000 * rect.width, y: rect.minY + 0.80000 * rect.height))
         bezierPath.addLine(to: CGPoint(x: rect.minX + 0.28000 * rect.width, y: rect.minY + 0.20000 * rect.height))
@@ -107,9 +96,7 @@ class TriangleOrRightBar: CAShapeLayer {
         return bezierPath
     }
     
-    
-    
-    var pauseRightPath: UIBezierPath {
+    override var pauseModeShape: UIBezierPath {
         let barWidth:CGFloat = rect.width * 0.1
         let barHeight:CGFloat = rect.height * 0.5
         let barOriginX: CGFloat = rect.origin.x + rect.width / 2 + barWidth - 4.0

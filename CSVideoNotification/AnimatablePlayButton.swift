@@ -21,12 +21,11 @@ class AnimatablePlayButton: UIView {
     let strokeColor = UIColor(red: 2.0 / 255.0, green: 136 / 255.0, blue: 209 / 255.0, alpha: 1.0)
     
     let changeState: BehaviorSubject<ButtonState> = BehaviorSubject(value: .play)
-//    var hideListener: BehaviorSubject<Bool> = BehaviorSubject(value: true)
     var onFrameChanged: BehaviorSubject<CGRect>!
     let bag = DisposeBag()
     
-    var circleLeftBar: CircleOrLeftBar!
-    var triangleRightBar: TriangleOrRightBar!
+    var circleLeftBar: CircleLayer!
+    var triangleRightBar: TriangleLayer!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,11 +47,11 @@ class AnimatablePlayButton: UIView {
         
         self.onFrameChanged = BehaviorSubject(value: withFrame)
         
-        self.circleLeftBar = CircleOrLeftBar(withinRect: withFrame, color: strokeColor)
+        self.circleLeftBar = CircleLayer(withinRect: withFrame, color: strokeColor)
         self.circleLeftBar.frame = self.bounds
         self.layer.addSublayer(circleLeftBar)
         
-        self.triangleRightBar = TriangleOrRightBar(withinRect: withFrame, color: strokeColor)
+        self.triangleRightBar = TriangleLayer(withinRect: withFrame, color: strokeColor)
         self.triangleRightBar.frame = self.bounds
         self.layer.addSublayer(triangleRightBar)
         
@@ -67,14 +66,17 @@ class AnimatablePlayButton: UIView {
         
         stateChangedObserver
             .map{ $0.1 == .pause }
-//            .delay(1.0, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { shouldHide in
-                UIView.animate(withDuration: 0.2,
-                               delay: shouldHide ? 0.5 : 0.0,
-                               options: .curveEaseIn,
-                               animations: { [weak self] in
-                    self?.alpha = shouldHide ? 0.0 : 1.0
-                }, completion: nil)
+            .subscribe(onNext: { [weak self] shouldHide in
+                if shouldHide {
+                    UIView.animate(withDuration: 0.2,
+                                   delay: 0.4,
+                                   options: .curveEaseIn,
+                                   animations: { [weak self] in
+                                    self?.alpha = 0.0
+                        }, completion: nil)
+                } else {
+                    self?.alpha = 1.0
+                }
             })
             .disposed(by: bag)
         
@@ -85,8 +87,6 @@ class AnimatablePlayButton: UIView {
         stateChangedObserver
             .bind(to: triangleRightBar.recalculateListener)
             .disposed(by: bag)
-        
-        
     }
     
 }
