@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class AnimatablePlayButton: UIView {
     
@@ -20,6 +21,7 @@ class AnimatablePlayButton: UIView {
     let strokeColor = UIColor(red: 2.0 / 255.0, green: 136 / 255.0, blue: 209 / 255.0, alpha: 1.0)
     
     let changeState: BehaviorSubject<ButtonState> = BehaviorSubject(value: .play)
+//    var hideListener: BehaviorSubject<Bool> = BehaviorSubject(value: true)
     var onFrameChanged: BehaviorSubject<CGRect>!
     let bag = DisposeBag()
     
@@ -40,14 +42,9 @@ class AnimatablePlayButton: UIView {
         self.setupView(withFrame: self.bounds)
     }
     
-    
-    
-}
-
-
-extension AnimatablePlayButton {
     private func setupView(withFrame: CGRect) {
         self.backgroundColor = background
+        self.isUserInteractionEnabled = false
         
         self.onFrameChanged = BehaviorSubject(value: withFrame)
         
@@ -61,12 +58,25 @@ extension AnimatablePlayButton {
         
         
         let stateChangedObserver = Observable.combineLatest(onFrameChanged,
-                                                            changeState) { [unowned self] frame, state in
+                                                            changeState) { [unowned self] frame, state -> (CGRect, ButtonState) in
                                                                 return (frame.insectRectBy(delta: self.radius), state)
             }
             .debug("AnimatableButtonState", trimOutput: true)
             .distinctUntilChanged { $0.0 == $1.0 && $0.1 == $1.1 }
             .share()
+        
+        stateChangedObserver
+            .map{ $0.1 == .pause }
+//            .delay(1.0, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { shouldHide in
+                UIView.animate(withDuration: 0.2,
+                               delay: shouldHide ? 0.5 : 0.0,
+                               options: .curveEaseIn,
+                               animations: { [weak self] in
+                    self?.alpha = shouldHide ? 0.0 : 1.0
+                }, completion: nil)
+            })
+            .disposed(by: bag)
         
         stateChangedObserver
             .bind(to: circleLeftBar.recalculateListener)
@@ -75,13 +85,9 @@ extension AnimatablePlayButton {
         stateChangedObserver
             .bind(to: triangleRightBar.recalculateListener)
             .disposed(by: bag)
+        
+        
     }
-    
-}
-
-
-extension AnimatablePlayButton {
-    
     
 }
 

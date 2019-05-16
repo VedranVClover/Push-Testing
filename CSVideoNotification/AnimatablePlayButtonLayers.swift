@@ -13,6 +13,7 @@ class CircleOrLeftBar: CAShapeLayer {
     var rect: CGRect!
     
     var recalculateListener: BehaviorSubject<(CGRect, AnimatablePlayButton.ButtonState)>!
+    
     let bag = DisposeBag()
     
     required init(withinRect rect: CGRect, color: UIColor) {
@@ -80,7 +81,6 @@ class TriangleOrRightBar: CAShapeLayer {
         recalculateListener
             .skip(1)
             .subscribe(onNext: { [weak self] (rect, state) in
-                self?.isHidden = false
                 self?.drawShapes(withRect: rect, isPaused: state == .pause)
             })
             .disposed(by: bag)

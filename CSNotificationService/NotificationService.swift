@@ -47,15 +47,10 @@ class NotificationService: UNNotificationServiceExtension {
             case CSPushConstants.PushCategory.shareVideo.rawValue :
                 guard let content = request.content.mutableCopy() as? UNMutableNotificationContent,
                     let attachmentUrlString = content.userInfo["attachment-url"] as? String,
-                    let attachmentUrl = URL(string: attachmentUrlString) else {
+                    let _ = URL(string: attachmentUrlString) else {
                         contentHandler(bestAttemptContent)
                         break
                 }
-//                if let videoUrlAttachment = try? UNNotificationAttachment(identifier: "video_url.mp4",
-//                                                                       url: attachmentUrl,
-//                                                                       options: nil) {
-//                    bestAttemptContent.attachments = [videoUrlAttachment]
-//                }
                 bestAttemptContent.title = CSPushConstants
                     .PushCategory
                     .shareVideo
